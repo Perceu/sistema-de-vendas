@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: v3nd4s
+      MYSQL_DATABASE: vendas
+    ports:
+      - '3306:3306'
+    networks:
+      - vendas
+    volumes:
+      - ./db:/home/bkp
+
+  php:
+    build: 
+      context: ./docker/
+      dockerfile: laravel.dockerfile
+    environment:
+      DB_HOST: db
+      DB_DATABASE: vendas
+      DB_PASSWORD: v3nd4s
+    networks:
+      - vendas
+    ports:
+      - '8000:80'
+    volumes:
+      - ./backend/:/var/www/html
+
+
+networks:
+  vendas:

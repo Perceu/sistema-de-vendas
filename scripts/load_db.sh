@@ -1,0 +1,1 @@
+docker-compose exec db bash -c "mysql -p\$MYSQL_ROOT_PASSWORD \$MYSQL_DATABASE < /home/bkp/db-seed.sql"
