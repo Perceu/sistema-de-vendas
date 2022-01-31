@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Vendas;
 
 class VendasController extends Controller
 {
@@ -13,17 +14,7 @@ class VendasController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Vendas::paginate(15);
     }
 
     /**
@@ -34,7 +25,15 @@ class VendasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $vendas = New Vendas();
+        $data = $request->all();
+        $vendas->cliente_id = $data['cliente_id'];
+        $vendas->produto_id = $data['produto_id'];
+        $vendas->quantidade = $data['quantidade'];
+        
+        if( $vendas->save() ){  
+            return $vendas;
+        }
     }
 
     /**
@@ -45,18 +44,7 @@ class VendasController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return Vendas::find($id);
     }
 
     /**
@@ -68,7 +56,15 @@ class VendasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $vendas = Vendas::find($id);
+        $data = $request->all();
+        $vendas->cliente_id = $data['cliente_id'];
+        $vendas->produto_id = $data['produto_id'];
+        $vendas->quantidade = $data['quantidade'];
+        
+        if( $vendas->save() ){  
+            return $vendas;
+        }
     }
 
     /**
@@ -79,6 +75,7 @@ class VendasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vendas = Vendas::find($id);
+        return $vendas->delete();
     }
 }

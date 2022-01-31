@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Produtos;
 
 class ProdutosController extends Controller
 {
@@ -13,17 +14,7 @@ class ProdutosController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Produtos::paginate(15);
     }
 
     /**
@@ -34,7 +25,15 @@ class ProdutosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $produto = New Produtos();
+        $data = $request->all();
+        $produto->name = $data['name'];
+        $produto->price = $data['price'];
+        $produto->fornecedor_id = $data['fornecedor_id'];
+        
+        if( $produto->save() ){  
+            return $produto;
+        }
     }
 
     /**
@@ -45,18 +44,7 @@ class ProdutosController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return Produtos::find($id);
     }
 
     /**
@@ -68,7 +56,15 @@ class ProdutosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $produto = Produtos::find($id);
+        $data = $request->all();
+        $produto->name = $data['name'];
+        $produto->price = $data['price'];
+        $produto->fornecedor_id = $data['fornecedor_id'];
+        
+        if( $produto->save() ){  
+            return $produto;
+        }
     }
 
     /**
@@ -79,6 +75,7 @@ class ProdutosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $produto = Produtos::find($id);
+        return $produto->delete();
     }
 }
